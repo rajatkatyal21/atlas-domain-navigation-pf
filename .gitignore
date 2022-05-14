@@ -1,0 +1,6 @@
+package main
+
+*.iml
+
+#ide
+.idea

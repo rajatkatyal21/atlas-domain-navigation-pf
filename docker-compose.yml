@@ -1,0 +1,10 @@
+version: "3.3"
+services:
+  dns:
+    build:
+      context: .
+      dockerfile: build/Dockerfile
+    image: dns:latest
+    environment:
+      - PORT=3002
+      - VERSION=v1

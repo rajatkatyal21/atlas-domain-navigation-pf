@@ -29,5 +29,6 @@ COPY --from=builder /app/ /dns
 #setting the path
 ENV PATH /dns:$PATH
 
+EXPOSE 8080
 # Executing the command
 CMD ["dns", "serve"]

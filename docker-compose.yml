@@ -8,3 +8,6 @@ services:
     environment:
       - PORT=3002
       - VERSION=v1
+      - SECTOR_ID=1
+    ports:
+      - 3001:3002

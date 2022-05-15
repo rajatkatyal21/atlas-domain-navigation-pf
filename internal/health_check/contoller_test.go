@@ -2,7 +2,7 @@ package health_check_test
 
 import (
 	"dns/internal/app"
-	"dns/internal/health_check"
+	health "dns/internal/health_check"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -22,11 +22,11 @@ func Test_status(t *testing.T) {
 
 	testCases := []struct {
 		Name   string
-		Result *health_check.Response
+		Result *health.Response
 	}{
 		{
 			Name: "HealthCheck API OK",
-			Result: &health_check.Response{
+			Result: &health.Response{
 				Status: "OK",
 			},
 		},
@@ -47,7 +47,7 @@ func Test_status(t *testing.T) {
 				t.Errorf("Test Failed. As expected 200 but got %d", w.Code)
 			}
 
-			res := &health_check.Response{}
+			res := &health.Response{}
 			if err := json.Unmarshal(w.Body.Bytes(), res); err != nil {
 				t.Errorf("error while unmarshalling the result %s", err.Error())
 			}

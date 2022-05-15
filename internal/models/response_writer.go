@@ -9,10 +9,31 @@ type RespWriter interface {
 	SendHttpResponse(w http.ResponseWriter)
 }
 
+type Status string
+
+const (
+	OK  Status = "OK"
+	NOK Status = "NOK"
+)
+
 // Response is the format in which the response will be sent.
 type Response struct {
 	response interface{}
 	code     int
+}
+
+type ErrorResponse struct {
+	Reason string
+	Status Status
+	Code   int
+}
+
+func NewError(reason string, status Status, code int) *ErrorResponse {
+	return &ErrorResponse{
+		Status: status,
+		Reason: reason,
+		Code:   code,
+	}
 }
 
 // NewResponseSetter is a constructor to create the RespWriter.
@@ -21,7 +42,7 @@ type Response struct {
 func NewResponseSetter(res interface{}, code int) RespWriter {
 	return &Response{
 		response: res,
-		code: code,
+		code:     code,
 	}
 }
 
@@ -38,4 +59,3 @@ func (r *Response) SendHttpResponse(w http.ResponseWriter) {
 	w.Write(res)
 
 }
-

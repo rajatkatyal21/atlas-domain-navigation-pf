@@ -2,7 +2,8 @@ package app
 
 import (
 	"context"
-	"dns/internal/health_check"
+	health "dns/internal/health_check"
+	dataBank "dns/internal/domain_navigation"
 	"fmt"
 	"log"
 	"net/http"
@@ -15,22 +16,29 @@ import (
 
 // Configuration required.
 type Config struct {
-	Port    int
-	Name    string
-	Version string
+	Port     int
+	Name     string
+	Version  string
+	SectorId int64
 }
 
 // Server Configuration
 type Server struct {
 	*Config
-	StatusHandler health_check.Handler
+	StatusHandler           health.Handler
+	DataBankLocationHandler dataBank.Handler
 }
 
 // NewServer is used for creating the instance of the server.
 func NewServer(c *Config) *Server {
 	s := &Server{
-		Config: c,
-		StatusHandler: &health_check.Controller{},
+		Config:        c,
+		StatusHandler: &health.Controller{},
+		DataBankLocationHandler: &dataBank.Controller{
+			DataBankCalculator: &dataBank.DataBankService{
+				SectorId: c.SectorId,
+			},
+		},
 	}
 
 	return s

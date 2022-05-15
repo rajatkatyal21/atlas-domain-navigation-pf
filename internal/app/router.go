@@ -18,6 +18,7 @@ func InitApi(s *Server) chi.Router {
 	r := chi.NewRouter()
 	r.Route("/", func(r chi.Router) {
 		r.Get("/status", s.StatusHandler.HealthCheck)
+		r.Post("/locate-data-bank", s.DataBankLocationHandler.DataBankLocator)
 	})
 
 	return r

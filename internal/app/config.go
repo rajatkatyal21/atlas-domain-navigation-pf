@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"dns/internal/health_check"
 	"fmt"
 	"log"
 	"net/http"
@@ -22,12 +23,14 @@ type Config struct {
 // Server Configuration
 type Server struct {
 	*Config
+	StatusHandler health_check.Handler
 }
 
 // NewServer is used for creating the instance of the server.
 func NewServer(c *Config) *Server {
 	s := &Server{
 		Config: c,
+		StatusHandler: &health_check.Controller{},
 	}
 
 	return s

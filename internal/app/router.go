@@ -3,6 +3,7 @@ package app
 import (
 	"fmt"
 	"github.com/go-chi/chi"
+
 )
 
 // Initialize the router
@@ -16,7 +17,7 @@ func (s *Server) InitRouter() chi.Router {
 func InitApi(s *Server) chi.Router {
 	r := chi.NewRouter()
 	r.Route("/", func(r chi.Router) {
-
+		r.Get("/status", s.StatusHandler.HealthCheck)
 	})
 
 	return r

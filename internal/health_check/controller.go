@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-
+// Health check hanler
 type Handler interface {
 	HealthCheck(w http.ResponseWriter, r *http.Request)
 }

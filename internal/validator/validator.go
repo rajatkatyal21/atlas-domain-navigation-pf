@@ -10,21 +10,27 @@ import (
 
 type ErrNamespace string
 
+// hanlder interface for validation.
 type Handler interface {
 	Validate(input interface{}) *ValidationError
 }
 
+// The ErrorHandler for the error message.
 type ValidationError struct {
 	Namespace    ErrNamespace
 	ErrorField   string
 	ErrorMessage string
 }
 
+// Validator struct
 type Validator struct {
 	Validator  *validator.Validate
 	Translator ut.Translator
 }
 
+
+// NewValidator creates the Handler required
+// for creating the validator.
 func NewValidator() Handler {
 	translator := en.New()
 
@@ -56,6 +62,8 @@ func NewValidator() Handler {
 	}
 }
 
+// Validate is used for validating the input
+// provided in the request to the dns system.
 func (v *Validator) Validate(input interface{}) *ValidationError {
 	err := v.Validator.Struct(input)
 	if err == nil {

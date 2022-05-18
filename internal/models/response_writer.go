@@ -5,10 +5,12 @@ import (
 	"net/http"
 )
 
+// ResponseWriter is the interface for Writing to the Response.
 type RespWriter interface {
 	SendHttpResponse(w http.ResponseWriter)
 }
 
+// Status enum
 type Status string
 
 const (
@@ -22,12 +24,14 @@ type Response struct {
 	code     int
 }
 
+//Error Response Struct
 type ErrorResponse struct {
 	Reason string
 	Status Status
 	Code   int
 }
 
+// NewError is used for creating the ErrorResponse.
 func NewError(reason string, status Status, code int) *ErrorResponse {
 	return &ErrorResponse{
 		Status: status,
@@ -46,7 +50,7 @@ func NewResponseSetter(res interface{}, code int) RespWriter {
 	}
 }
 
-// SendHttpResponse can be used a common function to send back the http response.
+// SendHttpResponse is a wrapper that can be used as common function to send back the http response.
 func (r *Response) SendHttpResponse(w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "application/json")
 
